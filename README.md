@@ -5,7 +5,8 @@ Starbound to Discord chatting and vice versa
 Starbound chat and Discord chat are typically seperate. This allows you to dedicate a Discord channel to be able to talk to Starbound players in.
 
 ## How to install
-**Recommended for minimal configuration** Navigate to your Server Directory (or Starbound install if you do not have a dedicated folder for a server)
+> I have only tested this on Windows. **It may not work on other operating systems or require additional configuration**
+* **Recommended for minimal configuration** Navigate to your Server Directory (or Starbound install if you do not have a dedicated folder for a server)
 and create a folder.
 * Inside your new folder, run the command `git clone https://github.com/RonanFinley/CrossBound.git` and wait for it to finish.
 * Then run the command `npm install` to install the dependancies.
