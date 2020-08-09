@@ -1,0 +1,16 @@
+{
+  "name": "starboundtodiscord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Dr. Yamok",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "starbound.js": "^0.2.0"
+  }
+}
