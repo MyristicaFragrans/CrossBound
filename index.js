@@ -13,15 +13,20 @@ const discord = new Discord.Client();
 
 var processLock = false;
 server.stdout.on('data', function(data) {
-  console.log(data.toString());
-  processSTD(data.toString());
-  if(!processLock && data.toString().includes('[Info] UniverseServer: listening for incoming TCP connections on')) {
+  std=data.toString().replace(/(\r\n|\n|\r)/gm,""); //remove breaklines
+  stripUnnecessaryData(std); //get rid of spammy things
+  processSTD(std);
+  if(!processLock && std.includes('[Info] UniverseServer: listening for incoming TCP connections on')) {
     processLock = true;
     startListeners();
     console.log("[Wrapper] Started Listeners");
   }
 });
-
+function stripUnnecessaryData(std) {
+  if(std=="" || std.indexOf("echo ping")==-1) {
+    console.log(std);
+  }
+}
 function processSTD(data) {
   a = data.split(' ');
   //console.log(a);
