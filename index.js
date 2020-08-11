@@ -35,19 +35,18 @@ function processSTD(data) {
       if(safeGet(a, 2)=="Client") {
         if(a.indexOf("connected")!=-1) {
           //client connected
-          console.log("Client Connected");
         } else
         if(a.indexOf('disconnected')!=-1) {
           //client disconnected
-          console.log("Client Disconnected");
         }
       }
     } else
     if(safeGet(a, 1)=="Chat:") {
       //chat client
-      console.log("Client Chatted");
       var chat = a.slice(2,a.length).join(' ');
-      usingChannel.send(chat);
+      
+      if(!chat.match(/<(\w|\s)*> \//)) //do not send commands
+        usingChannel.send(chat);
     }
   }
 }
