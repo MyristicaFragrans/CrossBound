@@ -60,7 +60,7 @@ discord.on('ready', () => {
   }).catch(console.error);
 });
 discord.on('message', msg => {
-  if(processLock && discord.user.id!=msg.author.id && msg.channel.id === config.discordChannelID) {
+  if(processLock && discord.user.id!=msg.author.id && msg.channel.id == config.discordChannelID) {
     sb.broadcast("<" + msg.author.username + "> " + msg.content);
   }
 });
