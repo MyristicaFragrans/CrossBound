@@ -5,17 +5,30 @@ Starbound to Discord chatting and vice versa
 Starbound chat and Discord chat are typically seperate. This allows you to dedicate a Discord channel to be able to talk to Starbound players in.
 
 ## How to install
+This requires Git, Node, and NPM
 > I have only tested this on Windows. **It may not work on other operating systems or require additional configuration**
 * **Recommended for minimal configuration** Navigate to your Server Directory (or Starbound install if you do not have a dedicated folder for a server)
 and create a folder.
 * Inside your new folder, run the command `git clone https://github.com/RonanFinley/CrossBound.git` and wait for it to finish.
 * Then run the command `npm install` to install the dependancies.
 
-### config.json
+### If you know what you are doing
+These are abstracted instructions that don't assume you are new to bot making and server setup
+* Make a bot. Give it a silly name for good measure.
+* Add it to your server with the minimum permission "Send Messages" and "Read Message History"
+* Put the bot token in `config.json` where it says `"BotTokenGoesHere"`
+* Turn on `runRconServer` in the starbound server configuration.
+* Set a password in the server config, copy it into `config.json`
+* Using developer mode in Discord, copy the ID of the channel you want to use into the configuration file `config.json`
+* With the server completely turned off, run `npm start` in the folder you cloned.
+
+### If you are new to this
+These are extremely in-depth instructions if you haven't done anything like this before
+#### config.json
 * Open up `config.json` in a text editor of your choice (Notepad works fine). We will use this in a moment.
 * If you did not follow the first recommended step, that's fine. Just copy absolute path from your "starbound_server.exe" for the "serverPath" in config.json
 
-### Discord Setup
+#### Discord Setup
 * In Discord, [Enable Developer Mode](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID).
 * In the server you want to use, right click on the channel you want to use and click "Copy ID"
 * In `config.json` which you opened earlier, replace `ChannelIDGoesHere` with the ID you just copied. Do not remove the quotes.
@@ -33,16 +46,16 @@ and create a folder.
 * Scroll back up to "Scopes" and click "Copy Link".
 * If you own the server or are otherwise able to add bots, paste the link into your browser to add the bot to the server. **If you do not own the server or cannot invite a bot**, send the link to the owner of the server and have them add it.
 
-### Starbound Setup
+#### Starbound Setup
 * In your Starbound Server Folder, open up the folder "Storage" and open "starbound_server.config" in a text editor of your choice.
 * **In starbound_server.config**, set "runRconServer" to `true`.
 * **In starbound_server.config**, set "rconServerPassword" to anything you want. **In config.json**, set "rconPass" to the same password.
 * **In config.json**, make "port" the same value as **starbound_server.config**'s "rconServerPort"
 * Save all files and close them.
 
-### Running
+#### Running
 * **DO NOT HAVE THE SERVER RUNNING.** Close the server if it is currently running.
-* In the folder you created at the beginning, run the command `npm start`. This will start the server for you. You should be able to log into the server and test the funcitonality.
+* In the folder you created at the beginning, run the command `npm start`. This will start the server for you. You should be able to log into the server and test the functionality.
 
 ## Is it compatable with X Mod?
 Probably. This program operates on a lower level than mods, so there should not be any interferance. Open an issue if this does not work **with** a mod, but **does work without** that mod.
