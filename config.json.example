@@ -2,7 +2,7 @@
     "host": "127.0.0.1",
     "port": 21026,
     "rconPass": "rcon",
-    "serverPath": "./../win64/starbound_server.exe",
+    "serverLogPath": "./../storage/starbound_server.log",
     "discordToken": "BotTokenGoesHere",
     "discordChannelID": "ChannelIDGoesHere"
 }

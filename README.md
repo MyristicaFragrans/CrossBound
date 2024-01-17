@@ -6,21 +6,23 @@ Starbound chat and Discord chat are typically seperate. This allows you to dedic
 
 ## How to install
 This requires Git, Node, and NPM
-> I have only tested this on Windows. **It may not work on other operating systems or require additional configuration**
+> I only test this on Linux.
 * **Recommended for minimal configuration** Navigate to your Server Directory (or Starbound install if you do not have a dedicated folder for a server)
 and create a folder.
-* Inside your new folder, run the command `git clone https://github.com/RonanFinley/CrossBound.git` and wait for it to finish.
-* Then run the command `npm install` to install the dependancies.
+* Inside your new folder, run the command `git clone https://github.com/MyristicaFragrans/CrossBound.git` and wait for it to finish.
+* `cd` into CrossBound and run the command `yarn install` to install the dependencies.
 
 ### If you know what you are doing
 These are abstracted instructions that don't assume you are new to bot making and server setup
 * Make a bot. Give it a silly name for good measure.
-* Add it to your server with the minimum permission "Send Messages" and "Read Message History"
+* Add it to your server with the minimum permission "Send Messages" and "Read Message History". It also needs the Read Messages intent enabled.
+* Make a copy of `config.json.example` with the name `config.json`
+* Give it the full path to your server's log file (In `storage/starbound_server.log`. Don't use any that have numbers on the end.)
 * Put the bot token in `config.json` where it says `"BotTokenGoesHere"`
 * Turn on `runRconServer` in the starbound server configuration.
 * Set a password in the server config, copy it into `config.json`
 * Using developer mode in Discord, copy the ID of the channel you want to use into the configuration file `config.json`
-* With the server completely turned off, run `npm start` in the folder you cloned.
+* With the server completely turned off, run `yarn run start` in the folder you cloned.
 
 ### If you are new to this
 These are extremely in-depth instructions if you haven't done anything like this before
@@ -29,6 +31,7 @@ These are extremely in-depth instructions if you haven't done anything like this
 * If you did not follow the first recommended step, that's fine. Just copy absolute path from your "starbound_server.exe" for the "serverPath" in config.json
 
 #### Discord Setup
+These instructions were written years ago and probably don't quite match up anymore.
 * In Discord, [Enable Developer Mode](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID).
 * In the server you want to use, right click on the channel you want to use and click "Copy ID"
 * In `config.json` which you opened earlier, replace `ChannelIDGoesHere` with the ID you just copied. Do not remove the quotes.
@@ -54,7 +57,7 @@ These are extremely in-depth instructions if you haven't done anything like this
 * Save all files and close them.
 
 #### Running
-* **DO NOT HAVE THE SERVER RUNNING.** Close the server if it is currently running.
+* You can have the server running now, as Crossbound is detached from the executable.
 * In the folder you created at the beginning, run the command `npm start`. This will start the server for you. You should be able to log into the server and test the functionality.
 
 ## Is it compatable with X Mod?

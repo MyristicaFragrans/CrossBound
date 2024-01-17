@@ -2,41 +2,38 @@ const config = require('./config.json');
 let sb;
 let usingChannel;
 
-const path = require('path');
 var Starbound = require('starbound.js');
-const spawn = require("child_process").spawn;
 const Discord = require('discord.js');
+Tail = require('tail').Tail;
 
-process.chdir(path.dirname(config.serverPath));
-const server = spawn(config.serverPath);
-const discord = new Discord.Client();
+const discord = new Discord.Client({intents: [Discord.GatewayIntentBits.GuildMessages, Discord.GatewayIntentBits.MessageContent]});
 
 var processLock = false;
-server.stdout.on('data', function(data) {
+
+tail = new Tail(config.serverLogPath);
+
+tail.on('line', function(data) {
   std=data.toString().replace(/(\r\n|\n|\r)/gm,""); //remove breaklines
-  stripUnnecessaryData(std); //get rid of spammy things
-  processSTD(std);
-  if(!processLock && std.includes('[Info] UniverseServer: listening for incoming TCP connections on')) {
-    processLock = true;
-    startListeners();
-    console.log("[Wrapper] Started Listeners");
+  try {
+    processSTD(std);
+  } catch(e) {
+    console.error("Error: ", e);
   }
 });
-function stripUnnecessaryData(std) {
-  if(std=="" || std.indexOf("echo ping")==-1) {
-    console.log(std);
-  }
-}
 function processSTD(data) {
-  a = data.split(' ');
-  //console.log(a);
+  let a = data.split(' ');
+  a.shift()
+  if (safeGet(a,1) != 'RCON' || !data.endsWith('echo ping'))
+    console.log(data);
   if(safeGet(a, 0)=="[Info]") {
     if(safeGet(a, 1)=="UniverseServer:") {
       if(safeGet(a, 2)=="Client") {
         if(a.indexOf("connected")!=-1) {
+          usingChannel.send("**"+a[3]+" joined**");
           //client connected
         } else
         if(a.indexOf('disconnected')!=-1) {
+          usingChannel.send(`**${a[3]} left**`)
           //client disconnected
         }
       }
@@ -50,18 +47,21 @@ function processSTD(data) {
     }
   }
 }
+tail.watch();
 
 discord.on('ready', () => {
   console.log(`[Discord] Logged in as ${discord.user.tag}!`);
-  discord.channels.fetch(config.discordChannelID)
-  .then(channel => {
+  discord.channels.fetch(config.discordChannelID).then(channel => {
     usingChannel = channel;
-    console.log("[Discord] Found channel " + channel.name)
-  }).catch(console.error);
+    console.log(`[Discord] Using channel ${channel.name}`);
+  }).catch(err=>{
+    console.error("[Discord] Error fetching channel:", err);
+    process.exit(1);
+  });
 });
-discord.on('message', msg => {
+discord.on('messageCreate', msg => {
   if(processLock && discord.user.id!=msg.author.id && msg.channel.id == config.discordChannelID) {
-    sb.broadcast("<" + msg.author.username + "> " + msg.content);
+    sb.broadcast("<" + msg.author.displayName + "> " + msg.content);
   }
 });
 
@@ -96,7 +96,7 @@ function startListeners() {
   
   sb.connect(config.rconPass, function(successful) {
     if (successful) {
-  
+      processLock = true;
       console.log('[Listener] Successfully connected to Starbound');
       // "ping" the server every 15 seconds
       interval = setInterval(ping, 15000);
@@ -109,7 +109,7 @@ function startListeners() {
     }
   });
 }
-
+startListeners()
 //safe getter
 function safeGet(array, index) {
   if(array.length<=index) return null;
